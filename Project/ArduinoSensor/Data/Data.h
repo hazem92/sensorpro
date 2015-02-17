@@ -24,6 +24,7 @@ class Data
 public:
 
   Data ();
+
   // If you want to create a new DataConfig with these values and save it on the EEPROM choose save = true
   Data ( short id, string type, short sensor_id,int precision, float step,
  		  float frequency,float min_allowed,float max_allowed,bool save);
@@ -68,7 +69,13 @@ public:
   }
   /**
    */
-  AlertList listAssociateAlerts ()
+  void listAssociateAlerts ()
+  {
+  }
+
+  /**
+   */
+  AlertList getListAlerts ()
   {
   }
 

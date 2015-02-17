@@ -108,8 +108,16 @@ void Data::update() {
 
 /**
  */
-AlertList Data::listAssociateAlerts ()
+void Data::listAssociateAlerts ()
 {
+	std::list<Alert*>::iterator i  ;
+			for ( i = alertList.begin(); i != alertList.end(); i++ ) {
+				(*i)->getInfos() ;
+			}
+}
+/**
+ */
+AlertList Data::getListAlerts () {
 	return alertList ;
 }
 

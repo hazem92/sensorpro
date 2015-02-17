@@ -95,6 +95,11 @@ public:
    */
   float getValue ()   {}
 
+  /*
+   * Description of the alert
+   */
+  void getInfos () {}
+
 
   short id;
   comparator condition;

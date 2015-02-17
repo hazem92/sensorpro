@@ -23,13 +23,13 @@ float SensorPro::getSensor_frequency_lcm ()   {
 
 /**
  */
-Sensor SensorPro::addSensor (short id, string pin, int classe)
+Sensor SensorPro::addSensor (Sensor *p,short id, string pin, int classe)
 {
 	//Nom_de_la_classe * Nom_du_pointeur;
 	//Nom_du_pointeur = new Nom_de_la_classe;
 
-	Sensor * id;
-	id = new Sensor (id,pin,classe) ;
+	p = new Sensor (id,pin,classe) ;
+	sensorList.push_back(p) ;
 
 
 }
@@ -39,7 +39,13 @@ Sensor SensorPro::addSensor (short id, string pin, int classe)
  */
 void SensorPro::deleteSensor (short sensor_id)
 {
-	delete (*sensor_id) ;
+	std::list<Sensor*>::iterator i  ;
+	for ( i = sensorList.begin(); i != sensorList.end(); i++ ) {
+		 if ( (*i)->getId() == sensor_id )
+			 sensorList.erase(i) ;
+	}
+
+	// delete (*sensor_id) ;
 }
 
 
@@ -57,99 +63,104 @@ void SensorPro::listSensors ()
 /**
  * @param  sensor_id
  */
-void activateSensor (short sensor_id)
-{
+void SensorPro::activateSensor (short sensor_id) {
+	Sensor sensor ;
+	sensor = findSensorById(sensor_id) ;
+	sensor.enableSensor() ;
 }
-
 
 /**
  * @param  sensor_id
  */
-void desactivateSensor (short sensor_id)
+void SensorPro::desactivateSensor (short sensor_id) {
+	Sensor sensor ;
+		sensor = findSensorById(sensor_id) ;
+		sensor.disableSensor() ;
+}
+
+
+/**
+ */
+bool SensorPro::checkStateSensor (short sensor_id) {
+	Sensor sensor ;
+			sensor = findSensorById(sensor_id) ;
+			sensor.getState();
+}
+
+
+/**
+ */
+void SensorPro::changeAlertValue (short alert_id, float value) {
+
+}
+
+
+/**
+ */
+void SensorPro::deleteAlert (short alert_id)
 {
 }
 
 
 /**
  */
-bool checkStateensor (short sensor_id)
+void SensorPro::listAlert ()
 {
 }
 
 
 /**
  */
-void changeAlertValue (short alert_id, float value)
+void SensorPro::activateAlert (short alert_id)
 {
 }
 
 
 /**
  */
-void deleteAlert (short alert_id)
+void SensorPro::desactivateAlert (short alert_id)
 {
 }
 
 
 /**
  */
-void listAlert ()
+bool SensorPro::checkStateAlert (short alert_id)
 {
 }
 
 
 /**
  */
-void activateAlert (short alert_id)
+void SensorPro::deleteData (short data_id)
 {
 }
 
 
 /**
  */
-void desactivateAlert (short alert_id)
+void SensorPro::listDataBySensor (short sensor_id)
 {
 }
 
 
 /**
  */
-bool checkStateAlert (short alert_id)
+void SensorPro::activateAutoSend (short data_id, short sensor_id)
 {
 }
 
 
 /**
  */
-void deleteData (short data_id)
+void SensorPro::desactivateAutoSend (short data_id, short sensor_id)
 {
 }
 
 
 /**
  */
-void listDataBySensor (short sensor_id)
-{
-}
-
-
-/**
- */
-void activateAutoSend (short data_id, short sensor_id)
-{
-}
-
-
-/**
- */
-void desactivateAutoSend (short data_id, short sensor_id)
-{
-}
-
-
-/**
- */
-float dataMinMeasured (short sensor_id, short data_id)
+float SensorPro::dataMinMeasured (short sensor_id, short data_id)
 {
 }
 
@@ -205,9 +216,26 @@ void SensorPro::setDataSendFrequency (short sensor_id, short data_id, float freq
 
 /**
  */
-Sensor SensorPro::findSensorById (short sensor_id)
-{
+Sensor SensorPro::findSensorById (short sensor_id){
+	std::list<Sensor*>::iterator i  ;
+	Sensor sensor = NULL  ;
+	for ( i = sensorList.begin(); i != sensorList.end(); i++ ) {
+		 if ( (*i)->getId() == sensor_id )
+			 sensor = (*i) ;
+	}
 }
+
+/*
+ *
+ */
+Sensor SensorPro::findAlertById (short sensor_id) {
+	std::list<Alert*>::iterator i  ;
+		Alert alert = NULL  ;
+		for ( i = alertList.begin(); i != alertList.end(); i++ ) {
+			 if ( (*i)->getId() == sensor_id )
+				 alert = (*i) ;
+		}
+ }
 
 
 /**

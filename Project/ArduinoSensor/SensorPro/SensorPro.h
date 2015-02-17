@@ -10,6 +10,8 @@ using std::string ;
 using std::list ;
 
 typedef list<Sensor*> SensorList;
+typedef list<Alert*>  AlertList;
+
 
 
 
@@ -46,7 +48,7 @@ public:
    * @param  type
    * @param  classe
    */
-  Sensor addSensor (short id, string pin, int classe)
+  Sensor addSensor (Sensor *p, short id, string pin, int classe)
   {
   }
 
@@ -86,7 +88,7 @@ public:
    * @return bool
    * @param  sensor_id
    */
-  bool checkStateensor (short sensor_id)
+  bool checkStateSensor (short sensor_id)
   {
   }
 
@@ -260,6 +262,14 @@ public:
   {
   }
 
+  /**
+    * @return Sensor
+    * @param  sensor_id
+    */
+   Sensor findAlertById (short sensor_id)
+   {
+   }
+
 
   /**
    * @param  sensor_id
@@ -296,6 +306,7 @@ private:
 
   float sensor_frequency_lcm;
   SensorList sensorList ;
+  AlertList alertList ;
 
 
 };

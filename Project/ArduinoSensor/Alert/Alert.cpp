@@ -109,3 +109,10 @@ void Alert::setValue (float new_var,bool save)   {
 float Alert::getValue ()   {
   return value;
 }
+
+/*
+ *
+ */
+void Alert::getInfos () {
+
+}
