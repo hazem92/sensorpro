@@ -48,7 +48,7 @@ public:
   /*
    *
    */
-  Sensor addSensor (Sensor sensor) ;
+  Sensor addSensor (Sensor *sensor) ;
 
   /**
    * @param  sensor_id
@@ -92,7 +92,7 @@ public:
 /*
  *
  */
-  Sensor addAlert (Alert alert);
+  Sensor addAlert (Alert *alert);
 
 
   /**
@@ -147,11 +147,12 @@ public:
   /*
    *
    */
-  Sensor addData (Data data); 
+  Sensor addData (Data *data); 
 
   /**
    * @param  data_id
    */
+
   void deleteData (short data_id) ; 
   
   
@@ -279,7 +280,7 @@ public:
     * @return Sensor
     * @param  sensor_id
     */
-   Sensor findAlertById (short sensor_id) ;
+   Alert findAlertById (short alert_id) ;
    
    
 

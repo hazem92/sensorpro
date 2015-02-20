@@ -108,7 +108,7 @@ void SensorPro::changeAlertValue (short alert_id, float value, bool save) {
 /**
  */
 void SensorPro::deleteAlert (short alert_id) {
-	std::list<Alert*>::iterator i  ;
+	SimpleList<Alert*>::iterator i  ;
 		for ( i = alertList.begin(); i != alertList.end(); i++ ) {
 		 if ( (*i)->getId() == alert_id )
 			 alertList.erase(i) ;
@@ -266,13 +266,13 @@ Sensor SensorPro::findSensorById (short sensor_id){
 /*
  *
  */
-Sensor SensorPro::findAlertById (short sensor_id) {
+Alert SensorPro::findAlertById (short alert_id) {
 	SimpleList<Alert*>::iterator i  ;
 	Alert * alert ;
 	alert = new Alert() ;
 	alert = NULL ;
 	for ( i = alertList.begin(); i != alertList.end(); i++ ) {
-		 if ( (*i)->getId() == sensor_id )
+		 if ( (*i)->getId() == alert_id )
 			 alert = (*i) ;
 	}
 	return *alert ;	

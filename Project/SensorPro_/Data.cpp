@@ -46,7 +46,7 @@ void Data::enableDataAutoSend ()
  * @return float
  */
  float Data::calculate ()
-{	return 90; 	
+{		
 	float tmp = (*pf)() ;
 	return  tmp;
 }
