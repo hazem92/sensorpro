@@ -7,7 +7,7 @@ Sensor::Sensor () {
 }
 
 Sensor::Sensor (short id, string pin, int classe) {
-	    this->id = id ;
+	        this->id = id ;
 		this->pin = pin;
 		this->state = true;
 		this->classe = classe;
@@ -76,22 +76,29 @@ void Sensor::updateData ()
  *
  */
 
-void Sensor::addData(short id, string type, short sensor_id,int precision, float step,
-		  float frequency,float min_allowed,float max_allowed,bool save,PtrFonct pf) {
+Data Sensor::addData(Data *data) {
+	
+	if (data = NULL) 
+		return *data;
 
-	Data * data ;
-	data = new Data ( id,type,sensor_id,precision,step,frequency,min_allowed,max_allowed,save,pf) ;
+	// Alert.id can't be already taken
+	SimpleList<Data*>::iterator i  ;
+	for ( i = dataList.begin(); i != dataList.end(); i++ ) {
+		 if ( (*i)->getId() == data->getId() ) {
+ 			 return *(*i);
+		}
+	}
 
 	this->dataList.push_back(data) ;
 
 	// updating the LCM of data frequencies
 
 	float a = data_frequency_lcm ;
-	float b = frequency ;
+	float b = data->getFrequency() ;
 
     while( a != b) {
     	if (a>b)
-    		b= frequency +b ;
+    		b= data->getFrequency() +b ;
     	else
     		a= data_frequency_lcm +a ;
     }
@@ -120,8 +127,9 @@ short Sensor::getId ()   {
 
 /**
  */
-void Sensor::setPin (string new_var)   {
-    pin = new_var;
+void Sensor::setPin (string  new_var)   {
+ if (new_var != NULL )
+ 	pin = new_var; 
 }
 
 /**
@@ -134,7 +142,8 @@ string Sensor::getPin ()   {
 /**
  */
 void Sensor::setClass (int new_var)   {
-    classe = new_var;
+if (new_var != NULL)
+	classe = new_var;
 }
 
 /**
@@ -155,7 +164,38 @@ float Sensor::getData_frequency_lcm ()   {
   return data_frequency_lcm;
 }
 
-string Sensor::getInfos () {
-
+void Sensor::getInfos () {
+	Serial.println("");
+	Serial.print("Sensor id : ");
+	Serial.print(id);
+	Serial.println("pin: ");
+	Serial.print(pin);
+	Serial.println("classe: ");
+	Serial.print(classe);
+	Serial.println("state: ");
+	Serial.print(state);
+	Serial.println("frequency: ");
+	Serial.print(data_frequency_lcm);	
 }
 
+
+void Sensor::enableAutoSend (short data_id)
+{
+	SimpleList<Data*>::iterator i  ;
+	for ( i = dataList.begin(); i != dataList.end(); i++ ) {
+		 if ( (*i)->getId() == data_id )
+			 (*i)->enableDataAutoSend () ;
+	}
+}
+
+
+/**
+ */
+void Sensor::disableAutoSend (short data_id){ 
+
+	SimpleList<Data*>::iterator i  ;
+	for ( i = dataList.begin(); i != dataList.end(); i++ ) {
+		 if ( (*i)->getId() == data_id )
+			 (*i)->disableDataAutoSend () ;
+	}
+}

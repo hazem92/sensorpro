@@ -69,8 +69,7 @@ public:
    * associated to the data choose save = true
    *
    */
-  void addData(short id, string type, short sensor_id,int precision, float step,
- 		  float frequency,float min_allowed,float max_allowed,bool save,PtrFonct pf) ;
+  Data addData(Data *data) ;
 
 /*
  *
@@ -120,7 +119,23 @@ public:
    */
   float getData_frequency_lcm () ;  
 
-  string getInfos () ;
+  void getInfos () ;
+
+ /**
+   * @param  data_id
+   * @param  sensor_id
+   */
+  void enableAutoSend (short data_id); 
+  
+  
+
+
+  /**
+   * @param  data_id
+   * @param  sensor_id
+   */
+  void disableAutoSend (short data_id) ;
+   
 
 
 

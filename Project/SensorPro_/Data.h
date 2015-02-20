@@ -11,6 +11,7 @@
 #include "Arduino.h"
 #include <SimpleList.h>
 #include "Alert.h"
+#include "DataConfig.h"
 
 
 
@@ -269,7 +270,7 @@ public:
 
   void sendValue () ;
 
-  string getInfos () ;
+  void getInfos () ;
 
 
 private:
@@ -287,6 +288,7 @@ private:
   float max_allowed;
   float value;
   PtrFonct pf;
+  DataConfig dataConfig ;
 
 
 

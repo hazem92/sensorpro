@@ -19,18 +19,18 @@ Data::Data ( short id, string type, short sensor_id,int precision, float step,
 	this->nextTimeStamp=millis();
 //	this->setMin_measure(FLT_MAX);
 //	this->setMax_measure(FLT_MIN);
- 	this->setMin_measure(-15);
-	this->setMax_measure(20000);
+ 	this->setMin_measure(10000);
+	this->setMax_measure(-10000);
 	this->pf = pf ;
 
-/*
+
 	if (save == true ) {
 		DataConfig * data ;
 		data = new DataConfig ( id,  precision,  step,
 		  		 frequency,  min_allowed,  max_allowed,true) ;
 		dataConfig = (*data) ;
 	}
-*/
+
 	this->update();
 
 }
@@ -56,8 +56,6 @@ void Data::enableDataAutoSend ()
 	void Data::checkAlerts ()
 	{
 		SimpleList<Alert*>::iterator i  ;
-				//Alert alert = NULL ;
-				Alert alert ;
 				float value = this->getValue() ;
 			for ( i = alertList.begin(); i != alertList.end(); i++ ) {
 				 if ( (*i)->checkAlert(value) )
@@ -310,7 +308,22 @@ void Data::disableDataAutoSend ()
 
   }
 
-  string getInfos () {
+  void Data::getInfos () {
+	Serial.println("");
+	Serial.print("data id : ");
+	Serial.print(id);
+	Serial.println("type: ");
+	Serial.print(type);
+	Serial.println("related to sensor: ");
+	Serial.print(sensor_id);
+	Serial.println("precision: ");
+	Serial.print(precision);
+	Serial.println("frequency: ");
+	Serial.print(1.0/periode);
+	Serial.println("min allowed ");
+	Serial.print(min_allowed);
+	Serial.println("max allowed ");
+	Serial.print(max_allowed);
 
   }
 

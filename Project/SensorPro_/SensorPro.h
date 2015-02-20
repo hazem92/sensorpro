@@ -1,3 +1,10 @@
+/*
+  SensorPro.h - Library for sensors management .
+  Created by Hazem Amara, Telecom Bretagne, Feb. 2015.
+
+*/
+
+
 
 #ifndef SENSORPRO_H
 #define SENSORPRO_H
@@ -8,6 +15,7 @@
 #include "Data.h"
 #include "Sensor.h"
 #include "DataConfig.h"
+
 
 typedef SimpleList<Sensor*> SensorList;
 typedef SimpleList<Alert*>  AlertList;
@@ -92,7 +100,7 @@ public:
 /*
  *
  */
-  Sensor addAlert (Alert *alert);
+  Alert addAlert (Alert *alert);
 
 
   /**
@@ -153,7 +161,7 @@ public:
    * @param  data_id
    */
 
-  void deleteData (short data_id) ; 
+  void deleteData (short sensor_id ,short data_id) ; 
   
   
 
@@ -161,16 +169,7 @@ public:
   /**
    * @param  sensor_id
    */
-  void listDataBySensor (short sensor_id); 
-  
-  
-
-
-  /**
-   * @param  data_id
-   * @param  sensor_id
-   */
-  void activateAutoSend (short data_id, short sensor_id); 
+  DataList listDataBySensor (short sensor_id); 
   
   
 
@@ -179,7 +178,16 @@ public:
    * @param  data_id
    * @param  sensor_id
    */
-  void desactivateAutoSend (short data_id, short sensor_id) ;
+  void enableAutoSend (short data_id, short sensor_id); 
+  
+  
+
+
+  /**
+   * @param  data_id
+   * @param  sensor_id
+   */
+  void disableAutoSend (short data_id, short sensor_id) ;
    
   
 
@@ -293,14 +301,14 @@ public:
 
   /**
    */
-  void getSensorFrequencyLcm () ;
+  float getSensorFrequencyLcm () ;
   
   
 
 
   /**
    */
-  void setSensorFrequencyLcm () ; 
+  void setSensorFrequencyLcm (float new_var) ; 
  
  
 
@@ -311,6 +319,7 @@ private:
   SensorList sensorList ;
   AlertList alertList ;
   DataList dataList ;
+  long periode ;
 
 
 };

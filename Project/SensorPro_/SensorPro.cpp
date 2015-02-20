@@ -29,9 +29,32 @@ float SensorPro::getSensor_frequency_lcm ()   {
 Sensor SensorPro::addSensor (Sensor *sensor)
 {
 	
-	if(sensor!=NULL)
-		sensorList.push_back(sensor) ;
+	if(sensor=NULL)
+		return *sensor;
+	// sensor.id can't be already taken
+	SimpleList<Sensor*>::iterator i  ;
+	for ( i = sensorList.begin(); i != sensorList.end(); i++ ) {
+		 if ( (*i)->getId() == sensor->getId() ) {
+ 			 return *(*i);
+		}
+	}
+	
+	// adding new sensor
+	sensorList.push_back(sensor) ;
+	
+	// updating the LCM of sensor frequencies
+	float a = sensor_frequency_lcm;
+	float b = sensor->getData_frequency_lcm ()  ;
+
+    while( a != b) {
+    	if (a>b)
+    		b= sensor->getData_frequency_lcm ()  +b ;
+    	else
+    		a= sensor_frequency_lcm; +a ;
+    }
+   setSensorFrequencyLcm (a) ;
 }
+
 
 
 /**
@@ -40,11 +63,11 @@ void SensorPro::deleteSensor (short sensor_id)
 {
 	SimpleList<Sensor*>::iterator i  ;
 	for ( i = sensorList.begin(); i != sensorList.end(); i++ ) {
-		 if ( (*i)->getId() == sensor_id )
-			 sensorList.erase(i) ;
+		 if ( (*i)->getId() == sensor_id ) {
+ 			 sensorList.erase(i) ;
+			(*i)->~Sensor();
+		}
 	}
-
-	// delete (*sensor_id) ;
 }
 
 
@@ -81,18 +104,27 @@ void SensorPro::desactivateSensor (short sensor_id) {
 /**
  */
 bool SensorPro::checkStateSensor (short sensor_id) {
-	Sensor sensor ;
-			sensor = findSensorById(sensor_id) ;
-			sensor.getState();
+	Sensor sensor = findSensorById(sensor_id) ;
+	return sensor.getState() ; 
 }
 
 /*
  *
  */
-Sensor SensorPro::addAlert (Alert *alert)
+Alert SensorPro::addAlert (Alert *alert)
 {
-	if(alert!=NULL)
-		alertList.push_back(alert) ;
+	if(alert=NULL)
+		return *alert ;
+
+	// sensor.id can't be already taken
+	SimpleList<Alert*>::iterator i  ;
+	for ( i = alertList.begin(); i != alertList.end(); i++ ) {
+		 if ( (*i)->getId() == alert->getId() ) {
+ 			 return *(*i);
+		}
+	}
+
+	alertList.push_back(alert) ;
 }
 
 
@@ -110,9 +142,11 @@ void SensorPro::changeAlertValue (short alert_id, float value, bool save) {
 void SensorPro::deleteAlert (short alert_id) {
 	SimpleList<Alert*>::iterator i  ;
 		for ( i = alertList.begin(); i != alertList.end(); i++ ) {
-		 if ( (*i)->getId() == alert_id )
-			 alertList.erase(i) ;
-	}
+			if ( (*i)->getId() == alert_id ) {
+				alertList.erase(i) ;
+				(*i)->~Alert();
+			}
+		}
 }
 
 
@@ -162,29 +196,37 @@ Sensor SensorPro::addData (Data *data)
 
 /**
  */
-void SensorPro::deleteData (short data_id)
+void SensorPro::deleteData (short sensor_id ,short data_id)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	sensor.deleteData(data_id) ;	
 }
 
 
 /**
  */
-void SensorPro::listDataBySensor (short sensor_id)
+DataList SensorPro::listDataBySensor (short sensor_id)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	sensor.listData () ;
 }
 
 
 /**
  */
-void SensorPro::activateAutoSend (short data_id, short sensor_id)
+void SensorPro::enableAutoSend (short data_id, short sensor_id)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	sensor.enableAutoSend (data_id) ;
 }
 
 
 /**
  */
-void SensorPro::desactivateAutoSend (short data_id, short sensor_id)
+void SensorPro::disableAutoSend (short data_id, short sensor_id)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	sensor.disableAutoSend (data_id) ;
 }
 
 
@@ -192,6 +234,9 @@ void SensorPro::desactivateAutoSend (short data_id, short sensor_id)
  */
 float SensorPro::dataMinMeasured (short sensor_id, short data_id)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	Data data = sensor.findDataById (data_id) ;
+	return data.getMin_measure () ;
 }
 
 
@@ -199,6 +244,9 @@ float SensorPro::dataMinMeasured (short sensor_id, short data_id)
  */
 float SensorPro::dataMaxMeasured (short sensor_id, short data_id)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	Data data = sensor.findDataById (data_id) ;
+	return data.getMax_measure () ;
 }
 
 
@@ -206,6 +254,9 @@ float SensorPro::dataMaxMeasured (short sensor_id, short data_id)
  */
 void SensorPro::resetDataMinMeasured (short sensor_id, short data_id)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	Data data = sensor.findDataById (data_id) ;
+	data.setMin_measure (10000) ;
 }
 
 
@@ -213,6 +264,9 @@ void SensorPro::resetDataMinMeasured (short sensor_id, short data_id)
  */
 void SensorPro::resetDataMaxMeasured (short sensor_id, short data_id)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	Data data = sensor.findDataById (data_id) ;
+	data.setMax_measure (-10000) ;
 }
 
 
@@ -220,6 +274,9 @@ void SensorPro::resetDataMaxMeasured (short sensor_id, short data_id)
  */
 void SensorPro::setDataPrecision (short sensor_id, short data_id, int precision)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	Data data = sensor.findDataById (data_id) ;
+	data.setPrecision (precision) ;
 }
 
 
@@ -227,6 +284,9 @@ void SensorPro::setDataPrecision (short sensor_id, short data_id, int precision)
  */
 void SensorPro::setDataStep (short sensor_id, short data_id, float step)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	Data data = sensor.findDataById (data_id) ;
+	data.setStep (step) ;
 }
 
 
@@ -234,6 +294,9 @@ void SensorPro::setDataStep (short sensor_id, short data_id, float step)
  */
 void SensorPro::setAllowedMinDataValue (short sensor_id, short data_id, float minAllowed)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	Data data = sensor.findDataById (data_id) ;
+	data.setMin_allowed (minAllowed) ;
 }
 
 
@@ -241,12 +304,18 @@ void SensorPro::setAllowedMinDataValue (short sensor_id, short data_id, float mi
  */
 void SensorPro::setDataSendFrequency (short sensor_id, short data_id, float frequency)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	Data data = sensor.findDataById (data_id) ;
+	data.setFrequency (frequency) ;
 }
 
 /**
  */
 void SensorPro::setAllowedMaxDataValue (short sensor_id, short data_id, float max_allowed)
 {
+	Sensor sensor = findSensorById(sensor_id) ;
+	Data data = sensor.findDataById (data_id) ;
+	data.setMax_allowed (max_allowed) ;
 }
 
 /**
@@ -279,27 +348,33 @@ Alert SensorPro::findAlertById (short alert_id) {
  }
 
 
-
-
-
 /**
  */
 void SensorPro::update ()
 {
+ 	long timeStamp = millis() ;
+	SimpleList<Sensor*>::iterator i  ;
+	for ( i = sensorList.begin(); i != sensorList.end(); i++ ) {
+		 (*i)->updateData();
+}
+	timeStamp = millis() - timeStamp ;
+	delay(periode - timeStamp);
+}
+
+/**
+ */
+float SensorPro::getSensorFrequencyLcm ()
+{
+	return sensor_frequency_lcm ;
 }
 
 
 /**
  */
-void SensorPro::getSensorFrequencyLcm ()
-{
-}
-
-
-/**
- */
-void SensorPro::setSensorFrequencyLcm ()
-{
+void SensorPro::setSensorFrequencyLcm (float new_var)
+{	
+	sensor_frequency_lcm = new_var ;
+	periode = 1/ new_var ;
 }
 
 

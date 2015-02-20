@@ -1,3 +1,4 @@
+
 #include <Data.h>
 //#include <DataUser.h>
 #include <OneWire.h>
@@ -19,7 +20,15 @@ float temperature (void) {
   return sensors.getTempCByIndex(0) ;
 }  
 
-Data data(115,"hh",0,2,3,10,200,1000,false,&temperature);
+float val ;
+float micro (void) {
+  val = analogRead(6);
+  return val ;
+}
+
+Data data_Tmp(115,"hh",0,3,1,1,0,120,false,&temperature);
+Data data_Mic(116,"hh",0,3,4,1,100,1000,false,&micro);
+
 //Alert alert(12,SUP,800,false);
 //DataUser data1(116,"hh",0,2,0.1,1,0,80,false);
 
@@ -39,17 +48,22 @@ sensors.begin();
 
 long tmp1 ;
 long tmp2;
-float i ;
+float i,j ;
 
 void loop() {
   tmp1 = millis() ;
-  data.update() ;
+  data_Tmp.update() ;
+  data_Mic.update() ;
   tmp2 = millis() ;
   Serial.print("temps pris par update ");
   Serial.println((tmp2-tmp1));
   i = temperature() ;
+  j = micro() ;
   Serial.print("ind temp ");
-  Serial.println(i);
+  Serial.print(i);
+  Serial.print("  mic ");
+  Serial.println(j);
+
   delay(500) ;
 
 }
