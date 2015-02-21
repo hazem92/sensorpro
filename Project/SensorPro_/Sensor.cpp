@@ -1,7 +1,5 @@
 #include "Sensor.h"
 
-// Constructors/Destructors
-//  
 
 Sensor::Sensor () {
 }
@@ -14,7 +12,6 @@ Sensor::Sensor (short id, string pin, int classe) {
 		this->dataList = {} ;
 }
 
-
 Sensor::~Sensor () { }
 
 
@@ -24,7 +21,6 @@ void Sensor::enableSensor ()
 {
 	state = true ;
 }
-
 
 /**
  */
@@ -53,14 +49,12 @@ Data Sensor::findDataById (short data_id)
 	return (*data) ;
 }
 
-
 /**
  */
 DataList Sensor::listData ()
 {
 	return dataList ;
 }
-
 
 /**
  */
@@ -73,9 +67,7 @@ void Sensor::updateData ()
 }
 
 /*
- *
  */
-
 Data Sensor::addData(Data *data) {
 	
 	if (data = NULL) 
@@ -187,7 +179,6 @@ void Sensor::enableAutoSend (short data_id)
 			 (*i)->enableDataAutoSend () ;
 	}
 }
-
 
 /**
  */

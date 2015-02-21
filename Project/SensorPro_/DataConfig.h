@@ -1,17 +1,16 @@
+ /*
+  DataConfig.h allows user to save configuration on EEPRPM
+  like this even after shutting down the arduino configuration can be found  
+ 
+ SensorPro.h - Library for sensors management .
+  Created by Hazem Amara, Telecom Bretagne, Feb. 2015.
 
+*/
 #ifndef DATACONFIG_H
 #define DATACONFIG_H
 
 #include "Arduino.h"
 #include <EEPROM.h>
-
-
-
-
-/**
-  * class DataConfig
-  * 
-  */
 
 class DataConfig
 {
@@ -94,7 +93,6 @@ public:
      */
     float getMax_allowed ()   ;
 
-
 private:
 
   short id;
@@ -105,8 +103,5 @@ private:
   float max_allowed;
   int adress ;
 
-
-
 };
-
 #endif // DATACONFIG_H

@@ -1,6 +1,5 @@
 #include "DataConfig.h"
 
-
 DataConfig::DataConfig () {
 }
 
@@ -13,14 +12,11 @@ DataConfig::DataConfig (short id, int precision, float step,
 	setFrequency (frequency,save) ;
 	setMin_allowed (min_allowed,save) ;
 	setMax_allowed (max_allowed,save) ;
-
 }
-
 
 DataConfig::~DataConfig () { }
 
 /*
- *
  */
 void DataConfig::setId (short new_var,bool save)   {
 	id = new_var ;

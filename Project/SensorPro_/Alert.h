@@ -1,3 +1,11 @@
+ /*
+  Alert.h : user can create an alert and specify the condition to start the alert
+  Data may be associated to many alerts and alert may be associated to many data
+  
+  SensorPro.h - Library for sensors management .
+  Created by Hazem Amara, Telecom Bretagne, Feb. 2015.
+
+*/
 
 #ifndef ALERT_H
 #define ALERT_H
@@ -7,18 +15,6 @@
 #endif
 #include "Arduino.h"
 
-/*
-#include <iostream>
-using namespace std;
-#include <string>
-#include <list>
-using std::string ;
-using std::list ;
-*/
-
-
-//typedef enum comparator  {INF="<",SUP=">",EGL="=",IEGL="<=",SEGL=">="} ;
-
 typedef enum comparator { INF,
 			 SUP,
                          EGL,
@@ -26,10 +22,6 @@ typedef enum comparator { INF,
 			 SEGL
 		} ;
 
-/**
-  * class Alert
-  * 
-  */
 
 class Alert
 {
@@ -40,25 +32,19 @@ public:
 
   virtual ~Alert ();
 
-
   /**
    */
   void enableAlert ();
   
-  
-
   /**
    */
   void disableAlert ();
-  
-  
 
   /**
    * check if the value passed in parameter verify the condition or not
    * @return boolean
    */
     bool checkAlert (float value);
-    
     
     /*
      *
@@ -95,8 +81,6 @@ public:
    */
   comparator getCondition ()   ;
 
-
-
   /**
    * Set the value of value
    * @param new_var the new value of value
@@ -114,13 +98,11 @@ public:
    */
   void getInfos () ;
 
-
   short id;
   comparator condition;
   bool state;
   float value;
   int adress ;
-
 
 };
 

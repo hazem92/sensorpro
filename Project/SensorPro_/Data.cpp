@@ -1,3 +1,4 @@
+ 
 #include "Data.h"
 //#include "float.h"
 
@@ -22,6 +23,38 @@ Data::Data ( short id, string type, short sensor_id,int precision, float step,
  	this->setMin_measure(10000);
 	this->setMax_measure(-10000);
 	this->pf = pf ;
+
+
+	if (save == true ) {
+		DataConfig * data ;
+		data = new DataConfig ( id,  precision,  step,
+		  		 frequency,  min_allowed,  max_allowed,true) ;
+		dataConfig = (*data) ;
+	}
+
+	this->update();
+
+}
+
+Data::Data ( short id, string type, short sensor_id,int precision, float step,
+		  float frequency,float min_allowed,float max_allowed,bool save) {
+
+	this->id = id ;
+	this->type = type ;
+	this->sensor_id = sensor_id ;
+	this->setPrecision(precision) ;
+	this->step = step ;
+	this->setFrequency(frequency);
+	this->min_allowed = min_allowed ;
+	this->max_allowed = max_allowed ;
+	this->send_auto = true ;
+	this->alertList = {} ;
+	this->nextTimeStamp=millis();
+//	this->setMin_measure(FLT_MAX);
+//	this->setMax_measure(FLT_MIN);
+ 	this->setMin_measure(10000);
+	this->setMax_measure(-10000);
+	this->pf = NULL ;
 
 
 	if (save == true ) {
@@ -76,7 +109,6 @@ void Data::update() {
 }
 
 /*
- *
  */  Alert Data::findAlertById (short id) {
 
 		SimpleList<Alert*>::iterator i  ;
@@ -223,14 +255,14 @@ void Data::disableDataAutoSend ()
    */
   float Data::setFrequency (float frequency)   {
 	  if (frequency > 0)
-		  periode =1/frequency;
+		  periode =1000/frequency;
 	  return getFrequency();
   }
 
   /**
    */
   float Data::getFrequency ()   {
-    return (1.0/periode);
+    return (1000.0/periode);
   }
 
   /**
@@ -264,7 +296,7 @@ void Data::disableDataAutoSend ()
   /**
    */
   void Data::setValue (float new_value)   {
-	       if ( abs(value-new_value) > precision )		
+	       if ( abs(value-new_value) < precision )		
 			return;
 		
 		if (value == new_value )
@@ -295,16 +327,19 @@ void Data::disableDataAutoSend ()
     return value;
   }
 
-
-
-
   void Data::sendValue () {
 	  if (this->send_auto == false)
 		return ;
-	  Serial.print("new value ");
-	  float tmp = this->getValue();
+	  float tmp ;
+	  Serial.print("new value on data id : ");
+	  tmp = this->getId();
 	  Serial.print(tmp) ;
-	  Serial.println();
+	  Serial.print(" connected to sensor id : ");
+	  tmp = this->sensor_id();
+	  Serial.print(tmp) ;
+	  Serial.print(" value : ");
+	  tmp = this->getValue();
+	  Serial.print(tmp) ;
 
   }
 
@@ -324,9 +359,11 @@ void Data::disableDataAutoSend ()
 	Serial.print(min_allowed);
 	Serial.println("max allowed ");
 	Serial.print(max_allowed);
-
   }
 
+  /*
+  * respect the type of the pointer
+  */
   void Data::setPointer (PtrFonct new_var)   {
 	pf = new_var ;
 }

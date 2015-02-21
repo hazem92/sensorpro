@@ -1,19 +1,24 @@
+ /*
+  Data.h : user can create many data associated to one sensor 
+  User can choose between giving a function pointer to calculate or to write a new class
+  using Data and specify calculate
+  
+  SensorPro.h - Library for sensors management .
+  Created by Hazem Amara, Telecom Bretagne, Feb. 2015.
 
-#ifndef DATA_H
+*/
+
+#ifndef DATA_ 
 #define DATA_H
 
 #ifndef NULL
 #define NULL 0
 #endif
 
-
-
 #include "Arduino.h"
 #include <SimpleList.h>
 #include "Alert.h"
 #include "DataConfig.h"
-
-
 
 
 typedef SimpleList<Alert*> AlertList;
@@ -24,12 +29,6 @@ typedef float (*PtrFonct)(void);
 //typedef list<DataConfig*> dataConfig;
 
 
-
-/**
-  * class Data
-  * 
-  */
-
 class Data
 {
 public:
@@ -37,21 +36,23 @@ public:
   Data ();
 
   // If you want to create a new DataConfig with these values and save it on the EEPROM choose save = true
+  // Use this constructer if you want to pass a function pointer to calculate 
   Data ( short id, string type, short sensor_id,int precision, float step,
  		  float frequency,float min_allowed,float max_allowed,bool save,PtrFonct pf);
+
+ // If you want to create a new DataConfig with these values and save it on the EEPROM choose save = true
+  Data ( short id, string type, short sensor_id,int precision, float step,
+ 		  float frequency,float min_allowed,float max_allowed,bool save);
 
   virtual ~Data ();
 
   void enableDataAutoSend ();
-  
   
 
   /**
    */
   void disableDataAutoSend ();
   
-  
-
   /**
    * user implements this function depending on the sensor he uses
    * the library uses this function to get the value of the data (of a sensor)
@@ -60,12 +61,9 @@ public:
    */
   virtual float calculate ();
   
-  
-
   /**
    */
   void checkAlerts ();
-  
   
   /*
    *
@@ -79,26 +77,18 @@ public:
    */
   void listAssociateAlerts ();
   
-  
-
   /**
    */
   AlertList getListAlerts ();
   
-  
-
   /**
    */
   void deleteAssociateAlert (short id);
   
-  
-
   /**
    */
   void addAssociateAlert (Alert alert);
   
-  
-
   /**
    * Set the value of id
    * @param new_var the new value of id
@@ -113,28 +103,24 @@ public:
    */
   short getId ()   ;
 
-
   /**
    * Set the value of type
    * @param new_var the new value of type
    */
   string setType (string new_var)   ;
   
-
   /**
    * Get the value of type
    * @return the value of type
    */
   string getType ()   ;
   
-
   /**
    * Set the value of sensor_id
    * @param new_var the new value of sensor_id
    */
   void setSensor_id (string new_var)   ;
   
-
   /**
    * Get the value of sensor_id
    * @return the value of sensor_id
@@ -148,34 +134,29 @@ public:
    */
   void setSend_auto (bool new_var)   ;
   
-
   /**
    * Get the value of send_auto
    * @return the value of send_auto
    */
   bool getSend_auto ()   ;
-  
 
   /**
    * Set the value of min_measure
    * @param new_var the new value of min_measure
    */
   void setMin_measure (float new_var)   ;
-  
 
   /**
    * Get the value of min_measure
    * @return the value of min_measure
    */
   float getMin_measure ()   ;
-  
 
   /**
    * Set the value of max_measure
    * @param new_var the new value of max_measure
    */
   void setMax_measure (float new_var)   ;
-  
 
   /**
    * Get the value of max_measure
@@ -188,50 +169,43 @@ public:
    * @param new_var the new value of precision
    */
   void setPrecision (int new_var)  ; 
-  
-
+ 
   /**
    * Get the value of precision
    * @return the value of precision
    */
   int getPrecision ()   ;
   
-
   /**
    * Set the value of step
    * @param new_var the new value of step
    */
   float setStep (float new_var)  ; 
   
-
   /**
    * Get the value of step
    * @return the value of step
    */
   float getStep ()   ;
   
-
   /**
    * Set the value of frequency
    * @param new_var the new value of frequency
    */
   float setFrequency (float new_var)   ;
   
-
   /**
    * Get the value of frequency
    * @return the value of frequency
    */
   float getFrequency ()   ;
   
-
   /**
    * Set the value of min_allowed
    * @param new_var the new value of min_allowed
    * @return the new value if everything went correctly
    */
   float setMin_allowed (float new_var)   ;
-  
 
   /**
    * Get the value of min_allowed
@@ -247,14 +221,12 @@ public:
    */
   float setMax_allowed (float new_var) ;  
   
-
   /**
    * Get the value of max_allowed
    * @return the value of max_allowed
    */
   float getMax_allowed ()   ;
-  
-
+   
   /**
    * Set the value of value
    * @param new_var the new value of value
@@ -267,11 +239,9 @@ public:
    */
   float getValue ()   ;
   
-
   void sendValue () ;
 
   void getInfos () ;
-
 
 private:
 
@@ -289,14 +259,9 @@ private:
   float value;
   PtrFonct pf;
   DataConfig dataConfig ;
-
-
-
   AlertList alertList ;
-  //DataConfig dataConfig ;
   long nextTimeStamp;
   long lastTimeStamp;
-
 
 };
 

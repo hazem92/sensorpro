@@ -1,3 +1,11 @@
+ /*
+  Sensor.h : this class calculate the necessary frequency to call update function of all data
+  	  
+  
+  SensorPro.h - Library for sensors management .
+  Created by Hazem Amara, Telecom Bretagne, Feb. 2015.
+
+*/
 
 #ifndef SENSOR_H
 #define SENSOR_H
@@ -7,21 +15,13 @@
 #include "Alert.h"
 #include "Data.h"
 
-
-
 typedef SimpleList<Data*> DataList;
 
 
-
-/**
-  * class Sensor
-  * 
-  */
-
 class Sensor
 {
-public:
 
+public:
 
   Sensor ();
   Sensor (short id, string pin, int classe) ;
@@ -33,15 +33,10 @@ public:
    */
   void enableSensor () ; 
   
-  
-
-
   /**
    */
   void disableSensor () ;
   
-  
-
   /**
    * Get the value of state
    * @return the value of state
@@ -54,16 +49,13 @@ public:
    */
   Data findDataById (short data_id);
   
-
   /**
    */
   DataList listData () ;
  
-  
   /**
    */
   void updateData () ;
-
 
   /*add new data associated to this Sensor, if you want that the library creates automatically a DataConfig
    * associated to the data choose save = true
@@ -72,10 +64,8 @@ public:
   Data addData(Data *data) ;
 
 /*
- *
  */
   void deleteData (short id) ;
-
 
   /**
    * Get the value of id
@@ -126,9 +116,6 @@ public:
    * @param  sensor_id
    */
   void enableAutoSend (short data_id); 
-  
-  
-
 
   /**
    * @param  data_id
@@ -136,10 +123,7 @@ public:
    */
   void disableAutoSend (short data_id) ;
    
-
-
-
-public :
+private :
 
   short id;
   string pin;

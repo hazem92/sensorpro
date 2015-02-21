@@ -4,8 +4,6 @@
 
 */
 
-
-
 #ifndef SENSORPRO_H
 #define SENSORPRO_H
 
@@ -23,17 +21,9 @@ typedef SimpleList<Data*>  dataList;
 typedef SimpleList<DataConfig*>  dataConfigList;
 
 
-
-
-
-
-/**
-  * class SensorPro
-  * 
-  */
-
 class SensorPro
 {
+
 public:
 
   SensorPro ();
@@ -52,9 +42,7 @@ public:
    */
   float getSensor_frequency_lcm () ;  
 
-
   /*
-   *
    */
   Sensor addSensor (Sensor *sensor) ;
 
@@ -63,45 +51,29 @@ public:
    */
   void deleteSensor (short sensor_id) ;
   
-  
-
-
   /**
    */
   void listSensors () ;
   
-  
-
-
   /**
    * @param  sensor_id
    */
   void activateSensor (short sensor_id) ;
   
-  
-
-
   /**
    * @param  sensor_id
    */
   void desactivateSensor (short sensor_id) ;
   
-  
-
-
   /**
    * @return bool
    * @param  sensor_id
    */
   bool checkStateSensor (short sensor_id) ;
   
-  
-
 /*
- *
  */
   Alert addAlert (Alert *alert);
-
 
   /**
    * Choose save = true if you want to change and save the value in the EEPROM
@@ -109,51 +81,33 @@ public:
    * @param  value
    */
   void changeAlertValue (short alert_id, float value,bool save) ;
-  
-  
-
-
+ 
   /**
    * @param  alert_id
    */
   void deleteAlert (short alert_id) ;
   
-  
-
-
   /**
    */
   void listAlert () ;
   
-  
-
-
   /**
    * @param  alert_id
    */
   void activateAlert (short alert_id) ;
   
-  
-
-
   /**
    * @param  alert_id
    */
   void desactivateAlert (short alert_id) ;
   
-  
-
-
   /**
    * @return bool
    * @param  alert_id
    */
   bool checkStateAlert (short alert_id) ;
   
-  
-
   /*
-   *
    */
   Sensor addData (Data *data); 
 
@@ -163,34 +117,23 @@ public:
 
   void deleteData (short sensor_id ,short data_id) ; 
   
-  
-
-
   /**
    * @param  sensor_id
    */
   DataList listDataBySensor (short sensor_id); 
   
-  
-
-
   /**
    * @param  data_id
    * @param  sensor_id
    */
   void enableAutoSend (short data_id, short sensor_id); 
   
-  
-
-
   /**
    * @param  data_id
    * @param  sensor_id
    */
   void disableAutoSend (short data_id, short sensor_id) ;
-   
   
-
   /**
    * @return float
    * @param  sensor_id
@@ -198,9 +141,6 @@ public:
    */
   float dataMinMeasured (short sensor_id, short data_id) ;
   
-  
-
-
   /**
    * @return float
    * @param  sensor_id
@@ -208,27 +148,18 @@ public:
    */
   float dataMaxMeasured (short sensor_id, short data_id) ;
   
-  
-
-
   /**
    * @param  sensor_id
    * @param  data_id
    */
   void resetDataMinMeasured (short sensor_id, short data_id) ;
   
-  
-
-
   /**
    * @param  sensor_id
    * @param  data_id
    */
   void resetDataMaxMeasured (short sensor_id, short data_id) ;
   
-  
-
-
   /**
    * @param  sensor_id
    * @param  data_id
@@ -236,9 +167,6 @@ public:
    */
   void setDataPrecision (short sensor_id, short data_id, int precision) ;
   
-  
-
-
   /**
    * @param  sensor_id
    * @param  data_id
@@ -246,8 +174,6 @@ public:
    */
   void setDataStep (short sensor_id, short data_id, float step) ;
   
-  
-
   /**
    * @param  sensor_id
    * @param  data_id
@@ -255,9 +181,6 @@ public:
    */
   void setAllowedMinDataValue (short sensor_id, short data_id, float minAllowed) ;
   
-  
-
-
   /**
    * @param  sensor_id
    * @param  data_id
@@ -265,8 +188,6 @@ public:
    */
   void setDataSendFrequency (short sensor_id, short data_id, float frequency) ;
   
-  
-
   /**
    * @param  sensor_id
    * @param  data_id
@@ -274,44 +195,21 @@ public:
    */
   void setAllowedMaxDataValue (short sensor_id, short data_id, float max_allowed) ;
   
-  
-
   /**
    * @return Sensor
    * @param  sensor_id
    */
   Sensor findSensorById (short sensor_id) ;
   
-  
-
   /**
     * @return Sensor
     * @param  sensor_id
     */
    Alert findAlertById (short alert_id) ;
    
-   
-
   /**
    */
   void update () ;
-  
-  
-
-
-  /**
-   */
-  float getSensorFrequencyLcm () ;
-  
-  
-
-
-  /**
-   */
-  void setSensorFrequencyLcm (float new_var) ; 
- 
- 
-
 
 private:
 
@@ -320,7 +218,6 @@ private:
   AlertList alertList ;
   DataList dataList ;
   long periode ;
-
 
 };
 
