@@ -1,0 +1,30 @@
+/* The sensor generate a square signal, so to find out the frequency we can 
+just measure the period that the signal take while reaching its high level.
+the period is the half of the signal period. 
+For this code i am using Offset = 7784 and Sensitivity = 397 
+*/
+
+
+
+
+void setup(){
+  Serial.begin(9600);
+}
+
+
+void loop(){
+  
+ float freq1 = 0 ;
+  Serial.println("Using pulseIn") ;
+  for(unsigned int j=0; j<4092; j++)  freq1+= 500000/pulseIn(3, HIGH,250000);
+  freq1 = freq1 / 4092 ;
+  Serial.print("freq") ;
+  Serial.println( freq1) ;
+  Serial.print("RH = ");
+  Serial.println((7784-freq1)*0.097) ;
+
+}
+
+
+
+
