@@ -11,7 +11,7 @@
 
 // HH10D fout pin is connected to digital 4
 // sensitivity = 360, offset = 7617
-HH10D rh(4);
+HH10D rh(8);
 
 void setup(){
   Serial.begin(9600);
