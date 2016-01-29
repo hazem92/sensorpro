@@ -22,7 +22,7 @@
  */
 
 /* ======================================================== */
-#define USE_INTERRUPTS
+//#define USE_INTERRUPTS
 
 #include "../Wire/Wire.h"
 #include "HH10D.h"
